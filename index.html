@@ -1,724 +1,802 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Biathlon Motion Analysis</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Biathlon Motion Analysis</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-<div class="app">
 
-<header class="topbar">
+<div id="app">
 
-  <div class="brand">
-    <div class="brand-mark">⛷</div>
-    <div>
-      <h1>바이애슬론 자세분석 시스템</h1>
-      <span>Biathlon Motion Analysis System</span>
-    </div>
-  </div>
+    <!-- =========================
+         HEADER
+    ========================== -->
 
-  <nav class="main-nav">
-    <button class="nav-btn active" data-tab="analysis">분석</button>
-    <button class="nav-btn" data-tab="shooting">사격 분석</button>
-    <button class="nav-btn" data-tab="compare">비교 분석</button>
-    <button class="nav-btn" data-tab="records">기록</button>
-    <button class="nav-btn" data-tab="athlete">선수 관리</button>
-  </nav>
+    <header class="header">
 
-  <div class="top-actions">
+        <div class="brand">
 
-    <button class="mode-btn active" id="mode2d">
-      2D 분석
-    </button>
+            <div class="brand-icon">
+                🎿
+            </div>
 
-    <button class="mode-btn" id="mode3d">
-      3D 분석
-    </button>
+            <div class="brand-text">
+                <h1>Biathlon Motion Analysis</h1>
+                <p>바이애슬론 선수 분석 시스템</p>
+            </div>
 
-    <label class="icon-btn">
-      📹
-      <input id="videoInput" type="file" accept="video/*" hidden>
-    </label>
-
-    <label class="icon-btn">
-      📂
-      <input id="csvInput" type="file" accept=".csv,.txt" hidden>
-    </label>
-
-  </div>
-
-</header>
+        </div>
 
 
-<main>
+        <nav class="navigation">
 
-<section id="analysis" class="tab-panel active">
+            <button
+                class="nav-button active"
+                data-page="analysis"
+            >
+                분석
+            </button>
 
-<div class="workspace">
+            <button
+                class="nav-button"
+                data-page="shooting"
+            >
+                사격 분석
+            </button>
 
-<!-- LEFT -->
-<aside class="sidebar">
+            <button
+                class="nav-button"
+                data-page="compare"
+            >
+                비교 분석
+            </button>
 
-<h3>분석 메뉴</h3>
+            <button
+                class="nav-button"
+                data-page="records"
+            >
+                기록
+            </button>
 
-<button class="side-btn active">
-🏃 주행 분석
-</button>
-
-<button class="side-btn" data-open="shooting">
-🎯 사격 분석
-</button>
-
-<button class="side-btn" data-open="compare">
-📊 통합 분석
-</button>
-
-
-<h3>표시 항목</h3>
-
-<label class="check">
-<input type="checkbox" checked data-toggle="skeleton">
-관절 포인트
-</label>
-
-<label class="check">
-<input type="checkbox" checked data-toggle="trajectory">
-총구 궤적
-</label>
-
-<label class="check">
-<input type="checkbox" checked data-toggle="distance">
-거리
-</label>
-
-<label class="check">
-<input type="checkbox" checked data-toggle="speed">
-속도
-</label>
-
-<label class="check">
-<input type="checkbox" checked data-toggle="cadence">
-케이던스
-</label>
-
-<label class="check">
-<input type="checkbox" checked data-toggle="heart">
-심박수
-</label>
-
-<label class="check">
-<input type="checkbox" checked data-toggle="gps">
-GPS 트랙
-</label>
+        </nav>
 
 
-<h3>구간 정보</h3>
+        <div class="header-actions">
 
-<div class="segments">
+            <button
+                id="mode2D"
+                class="mode-button active"
+            >
+                2D
+            </button>
 
-<div>
-<b class="green">주행 1</b>
-<span>00:00–07:23</span>
+            <button
+                id="mode3D"
+                class="mode-button"
+            >
+                3D
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main>
+
+
+        <!-- =====================
+             ANALYSIS PAGE
+        ====================== -->
+
+        <section
+            id="analysisPage"
+            class="page active"
+        >
+
+            <div class="analysis-layout">
+
+
+                <!-- LEFT SIDEBAR -->
+
+                <aside class="sidebar">
+
+                    <h2>데이터 입력</h2>
+
+
+                    <label
+                        class="upload-button"
+                        for="videoInput"
+                    >
+
+                        🎥
+
+                        <span>
+                            영상 선택
+                        </span>
+
+                        <input
+                            id="videoInput"
+                            type="file"
+                            accept="video/*"
+                            hidden
+                        >
+
+                    </label>
+
+
+                    <label
+                        class="upload-button"
+                        for="imageInput"
+                    >
+
+                        🖼️
+
+                        <span>
+                            사진 선택
+                        </span>
+
+                        <input
+                            id="imageInput"
+                            type="file"
+                            accept="image/*"
+                            hidden
+                        >
+
+                    </label>
+
+
+                    <label
+                        class="upload-button"
+                        for="polarInput"
+                    >
+
+                        ❤️
+
+                        <span>
+                            Polar 데이터
+                        </span>
+
+                        <input
+                            id="polarInput"
+                            type="file"
+                            accept=".csv,.txt,.tcx,.fit"
+                            hidden
+                        >
+
+                    </label>
+
+
+                    <label
+                        class="upload-button"
+                        for="gpsInput"
+                    >
+
+                        🗺️
+
+                        <span>
+                            GPS 데이터
+                        </span>
+
+                        <input
+                            id="gpsInput"
+                            type="file"
+                            accept=".csv,.gpx,.tcx,.fit"
+                            hidden
+                        >
+
+                    </label>
+
+
+                    <hr>
+
+
+                    <h2>분석 설정</h2>
+
+
+                    <label class="setting">
+
+                        <span>
+                            분석 종류
+                        </span>
+
+                        <select id="analysisType">
+
+                            <option value="">
+                                선택하세요
+                            </option>
+
+                            <option value="ski">
+                                주행 분석
+                            </option>
+
+                            <option value="shooting">
+                                사격 분석
+                            </option>
+
+                            <option value="combined">
+                                주행 + 사격
+                            </option>
+
+                        </select>
+
+                    </label>
+
+
+                    <label class="setting">
+
+                        <span>
+                            카메라 방향
+                        </span>
+
+                        <select id="cameraView">
+
+                            <option value="">
+                                선택하세요
+                            </option>
+
+                            <option value="side">
+                                측면
+                            </option>
+
+                            <option value="front">
+                                정면
+                            </option>
+
+                            <option value="back">
+                                후면
+                            </option>
+
+                            <option value="unknown">
+                                모름
+                            </option>
+
+                        </select>
+
+                    </label>
+
+
+                    <label class="check-setting">
+
+                        <input
+                            id="cadenceEnabled"
+                            type="checkbox"
+                        >
+
+                        <span>
+                            케이던스 분석
+                        </span>
+
+                    </label>
+
+
+                    <label class="check-setting">
+
+                        <input
+                            id="heartEnabled"
+                            type="checkbox"
+                        >
+
+                        <span>
+                            심박 분석
+                        </span>
+
+                    </label>
+
+
+                    <label class="check-setting">
+
+                        <input
+                            id="gpsEnabled"
+                            type="checkbox"
+                        >
+
+                        <span>
+                            GPS 분석
+                        </span>
+
+                    </label>
+
+
+                    <button
+                        id="startAnalysis"
+                        class="analysis-button"
+                    >
+                        분석 시작
+                    </button>
+
+
+                    <div
+                        id="analysisStatus"
+                        class="analysis-status"
+                    >
+                        분석할 데이터를 추가해주세요.
+                    </div>
+
+                </aside>
+
+
+
+                <!-- CENTER -->
+
+                <section class="center-area">
+
+
+                    <div class="video-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <strong>
+                                    자세 분석
+                                </strong>
+
+                                <span id="inputName">
+                                    입력 없음
+                                </span>
+                            </div>
+
+                            <span id="analysisState">
+                                대기 중
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            id="visualArea"
+                            class="visual-area"
+                        >
+
+                            <div
+                                id="emptyState"
+                                class="empty-state"
+                            >
+
+                                <div class="empty-icon">
+                                    🎿
+                                </div>
+
+                                <h3>
+                                    분석 데이터를 추가해주세요
+                                </h3>
+
+                                <p>
+                                    사진 또는 영상을 선택하면
+                                    이곳에서 자세 분석을 시작할 수 있습니다.
+                                </p>
+
+                            </div>
+
+
+                            <video
+                                id="videoPlayer"
+                                controls
+                                playsinline
+                                hidden
+                            ></video>
+
+
+                            <img
+                                id="imagePreview"
+                                alt="분석 이미지"
+                                hidden
+                            >
+
+
+                            <canvas
+                                id="poseCanvas"
+                                hidden
+                            ></canvas>
+
+                        </div>
+
+
+                        <div class="video-controls">
+
+                            <button id="previousFrame">
+                                ◀
+                            </button>
+
+                            <button id="playPause">
+                                ▶
+                            </button>
+
+                            <button id="nextFrame">
+                                ▶
+                            </button>
+
+                            <input
+                                id="timeline"
+                                type="range"
+                                min="0"
+                                max="100"
+                                value="0"
+                            >
+
+                            <select id="playbackSpeed">
+
+                                <option value="0.25">
+                                    0.25×
+                                </option>
+
+                                <option value="0.5">
+                                    0.5×
+                                </option>
+
+                                <option
+                                    value="1"
+                                    selected
+                                >
+                                    1×
+                                </option>
+
+                                <option value="1.5">
+                                    1.5×
+                                </option>
+
+                                <option value="2">
+                                    2×
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ANALYSIS RESULT -->
+
+                    <div class="result-grid">
+
+
+                        <div class="result-card">
+
+                            <span>
+                                거리
+                            </span>
+
+                            <strong id="distanceResult">
+                                —
+                            </strong>
+
+                            <small>
+                                m
+                            </small>
+
+                        </div>
+
+
+                        <div class="result-card">
+
+                            <span>
+                                속도
+                            </span>
+
+                            <strong id="speedResult">
+                                —
+                            </strong>
+
+                            <small>
+                                km/h
+                            </small>
+
+                        </div>
+
+
+                        <div class="result-card cadence-card">
+
+                            <span>
+                                케이던스
+                            </span>
+
+                            <strong id="cadenceResult">
+                                —
+                            </strong>
+
+                            <small>
+                                cycle/min
+                            </small>
+
+                        </div>
+
+
+                        <div class="result-card heart-card">
+
+                            <span>
+                                심박수
+                            </span>
+
+                            <strong id="heartResult">
+                                —
+                            </strong>
+
+                            <small>
+                                bpm
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- JOINT ANALYSIS -->
+
+                    <div class="joint-panel">
+
+                        <div class="panel-title">
+                            관절 분석
+                        </div>
+
+
+                        <div class="joint-grid">
+
+                            <div>
+                                <strong id="kneeResult">
+                                    —
+                                </strong>
+
+                                <span>
+                                    무릎
+                                </span>
+                            </div>
+
+
+                            <div>
+                                <strong id="hipResult">
+                                    —
+                                </strong>
+
+                                <span>
+                                    고관절
+                                </span>
+                            </div>
+
+
+                            <div>
+                                <strong id="ankleResult">
+                                    —
+                                </strong>
+
+                                <span>
+                                    발목
+                                </span>
+                            </div>
+
+
+                            <div>
+                                <strong id="elbowResult">
+                                    —
+                                </strong>
+
+                                <span>
+                                    팔꿈치
+                                </span>
+                            </div>
+
+
+                            <div>
+                                <strong id="trunkResult">
+                                    —
+                                </strong>
+
+                                <span>
+                                    상체 기울기
+                                </span>
+                            </div>
+
+
+                            <div>
+                                <strong id="balanceResult">
+                                    —
+                                </strong>
+
+                                <span>
+                                    좌우 균형
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- RIGHT -->
+
+                <aside class="right-panel">
+
+
+                    <div class="right-card">
+
+                        <div class="panel-title">
+                            Polar 심박
+                        </div>
+
+                        <div
+                            id="heartDataStatus"
+                            class="data-status"
+                        >
+                            데이터 없음
+                        </div>
+
+                        <canvas
+                            id="heartChart"
+                        ></canvas>
+
+                    </div>
+
+
+                    <div class="right-card">
+
+                        <div class="panel-title">
+                            케이던스
+                        </div>
+
+                        <div
+                            id="cadenceDataStatus"
+                            class="data-status"
+                        >
+                            분석 전
+                        </div>
+
+                        <canvas
+                            id="cadenceChart"
+                        ></canvas>
+
+                    </div>
+
+
+                    <div class="right-card">
+
+                        <div class="panel-title">
+                            GPS
+                        </div>
+
+                        <div
+                            id="gpsDataStatus"
+                            class="data-status"
+                        >
+                            데이터 없음
+                        </div>
+
+                        <div
+                            id="gpsMap"
+                            class="gps-map"
+                        >
+                            GPS 데이터를 추가해주세요.
+                        </div>
+
+                    </div>
+
+
+                </aside>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================
+             SHOOTING PAGE
+        ====================== -->
+
+        <section
+            id="shootingPage"
+            class="page"
+        >
+
+            <div class="empty-page">
+
+                <div>
+                    🎯
+                </div>
+
+                <h2>
+                    사격 분석
+                </h2>
+
+                <p>
+                    사격 영상을 추가하면 자세와 움직임을 분석할 수 있습니다.
+                </p>
+
+                <button
+                    class="page-action"
+                    data-open-upload
+                >
+                    사격 영상 추가
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================
+             COMPARE PAGE
+        ====================== -->
+
+        <section
+            id="comparePage"
+            class="page"
+        >
+
+            <div class="empty-page">
+
+                <div>
+                    📊
+                </div>
+
+                <h2>
+                    비교 분석
+                </h2>
+
+                <p>
+                    분석이 완료된 두 훈련 세션을 비교할 수 있습니다.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================
+             RECORD PAGE
+        ====================== -->
+
+        <section
+            id="recordsPage"
+            class="page"
+        >
+
+            <div class="empty-page">
+
+                <div>
+                    📋
+                </div>
+
+                <h2>
+                    훈련 기록
+                </h2>
+
+                <p>
+                    분석을 완료하면 훈련 결과가 이곳에 표시됩니다.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
 </div>
 
-<div>
-<b class="orange">사격 1</b>
-<span>07:23–07:58</span>
-</div>
-
-<div>
-<b class="blue">주행 2</b>
-<span>07:58–15:20</span>
-</div>
-
-<div>
-<b class="orange">사격 2</b>
-<span>15:20–15:55</span>
-</div>
-
-<div>
-<b class="blue">주행 3</b>
-<span>15:55–18:45</span>
-</div>
-
-</div>
-
-
-<button class="file-btn" id="loadDemo">
-데모 데이터 불러오기
-</button>
-
-</aside>
-
-
-<!-- CENTER -->
-<div class="center">
-
-<div class="video-card">
-
-<div class="card-head">
-<span>실시간 주행 분석</span>
-<span id="videoTime">00:00 / 00:00</span>
-<span id="playRate">1.0×</span>
-</div>
-
-
-<div class="video-stage">
-
-<div id="poseStatus" class="pose-status">
-AI 자세 추적: 대기 중
-</div>
-
-
-<video
-id="video"
-playsinline>
-</video>
-
-
-<div id="videoPlaceholder"
-class="video-placeholder">
-
-<div>🎿</div>
-
-<strong>
-훈련 영상을 열어주세요
-</strong>
-
-<span>
-영상 파일을 선택하면 AI 자세 추적이 시작됩니다.
-</span>
-
-</div>
-
-
-<!-- 2D SKELETON -->
-
-<svg
-id="skeleton2d"
-class="overlay"
-viewBox="0 0 800 450">
-
-<g class="bones"></g>
-<g class="joints"></g>
-
-</svg>
-
-
-<div
-id="distanceMarker"
-class="distance-marker">
-1,325 m
-</div>
-
-</div>
-
-
-<div class="controls">
-
-<button id="back10">⏮</button>
-
-<button id="play">▶</button>
-
-<button id="forward10">⏭</button>
-
-<input
-id="seek"
-type="range"
-min="0"
-max="100"
-value="0">
-
-<select id="rate">
-
-<option value="0.25">
-0.25×
-</option>
-
-<option value="0.5">
-0.5×
-</option>
-
-<option value="1" selected>
-1×
-</option>
-
-<option value="1.5">
-1.5×
-</option>
-
-<option value="2">
-2×
-</option>
-
-</select>
-
-</div>
-
-</div>
-
-
-<div class="timeline">
-
-<div class="segment-track">
-
-<span
-class="seg green-bg"
-style="width:39%">
-주행 1
-</span>
-
-<span
-class="seg orange-bg"
-style="width:3%">
-사격
-</span>
-
-<span
-class="seg blue-bg"
-style="width:39%">
-주행 2
-</span>
-
-<span
-class="seg orange-bg"
-style="width:3%">
-사격
-</span>
-
-<span
-class="seg blue-bg"
-style="width:16%">
-주행 3
-</span>
-
-</div>
-
-</div>
-
-
-<div class="charts">
-
-<div class="chart-card">
-
-<h4>
-속도
-<small>km/h</small>
-</h4>
-
-<canvas id="speedChart"></canvas>
-
-</div>
-
-
-<div class="chart-card cadence-card">
-
-<h4>
-케이던스
-<small>cycle/min</small>
-</h4>
-
-<canvas id="cadenceChart"></canvas>
-
-</div>
-
-
-<div class="chart-card heart-card">
-
-<h4>
-심박수
-<small>bpm</small>
-</h4>
-
-<canvas id="heartChart"></canvas>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- RIGHT -->
-
-<aside class="metrics">
-
-
-<div class="metric distance">
-
-<span>
-거리 Distance
-</span>
-
-<strong id="distanceNow">
-1,325 m
-</strong>
-
-<small>
-총 거리
-<b id="distanceTotal">
-6,245 m
-</b>
-</small>
-
-</div>
-
-
-<div class="metric">
-
-<span>
-속도 Speed
-</span>
-
-<div class="metric-row">
-
-<strong id="speedNow">
-18.6
-</strong>
-
-<small>
-km/h
-</small>
-
-</div>
-
-<small>
-평균 16.2 · 최고 24.8
-</small>
-
-</div>
-
-
-<div class="metric cadence">
-
-<span>
-케이던스 Cadence
-</span>
-
-<div class="metric-row">
-
-<strong id="cadenceNow">
-52
-</strong>
-
-<small>
-cycle/min
-</small>
-
-</div>
-
-<small>
-평균 48 · 최고 57
-</small>
-
-</div>
-
-
-<div class="metric heart">
-
-<span>
-심박수 Heart Rate
-</span>
-
-<div class="metric-row">
-
-<strong id="heartNow">
-162
-</strong>
-
-<small>
-bpm
-</small>
-
-</div>
-
-<small>
-평균 158 · 최고 185
-</small>
-
-</div>
-
-
-<div class="pose-card">
-
-<div class="pose-head">
-
-<span>
-3D 스켈레톤
-</span>
-
-<div>
-
-<button
-id="mini2d">
-2D
-</button>
-
-<button
-id="mini3d"
-class="selected">
-3D
-</button>
-
-</div>
-
-</div>
-
-
-<div id="skeleton3d"
-class="skeleton3d">
-
-<div class="joint head"></div>
-
-<div class="bone spine"></div>
-
-<div class="bone arm left"></div>
-
-<div class="bone arm right"></div>
-
-<div class="bone leg left"></div>
-
-<div class="bone leg right"></div>
-
-<div class="ski ski-left"></div>
-
-<div class="ski ski-right"></div>
-
-</div>
-
-</div>
-
-
-<div class="gps-card">
-
-<div class="gps-title">
-GPS 트랙
-</div>
-
-<svg viewBox="0 0 300 100">
-
-<path
-d="M5 78
-C35 20,55 92,90 50
-S145 20,170 60
-S230 80,295 18"
-fill="none"
-stroke="#44d7a8"
-stroke-width="5"/>
-
-<circle
-cx="170"
-cy="60"
-r="6"
-fill="#fff"/>
-
-</svg>
-
-</div>
-
-</aside>
-
-</div>
-
-</section>
-
-
-<!-- SHOOTING -->
-
-<section
-id="shooting"
-class="tab-panel">
-
-<div class="shoot-grid">
-
-
-<div class="shoot-video card">
-
-<div class="card-head">
-
-<span>
-사격 자세 분석
-</span>
-
-<span>
-0.5×
-</span>
-
-</div>
-
-
-<div class="shoot-placeholder">
-
-🎯
-
-<strong>
-사격 영상
-</strong>
-
-<span>
-영상 프레임에서 자세와 움직임을 분석합니다.
-</span>
-
-</div>
-
-
-<div class="controls">
-
-<button>
-⏮
-</button>
-
-<button>
-▶
-</button>
-
-<button>
-⏭
-</button>
-
-<input
-type="range"
-value="42">
-
-</div>
-
-</div>
-
-
-<div class="trajectory card">
-
-<h3>
-움직임 궤적
-</h3>
-
-<canvas
-id="trajectoryCanvas">
-</canvas>
-
-<small>
-영상 기반 위치 추적 결과
-</small>
-
-</div>
-
-
-<div class="shoot-stats card">
-
-<h3>
-사격 세션
-</h3>
-
-<div class="big">
-5 / 5
-</div>
-
-<span>
-기록된 명중 결과
-</span>
-
-<hr>
-
-
-<div class="stat-line">
-<span>자세 안정성</span>
-<b>92%</b>
-</div>
-
-<div class="stat-line">
-<span>좌우 흔들림</span>
-<b>3.2 cm</b>
-</div>
-
-<div class="stat-line">
-<span>상하 흔들림</span>
-<b>2.8 cm</b>
-</div>
-
-<div class="stat-line">
-<span>사격 중 평균 HR</span>
-<b>158 bpm</b>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<section
-id="compare"
-class="tab-panel">
-
-<div class="empty-panel">
-
-<h2>
-비교 분석
-</h2>
-
-<p>
-베스트 세션과 현재 세션의 속도 · 케이던스 · 심박 · 자세를 같은 시간축으로 비교합니다.
-</p>
-
-<button
-class="file-btn"
-id="compareDemo">
-데모 비교 보기
-</button>
-
-</div>
-
-</section>
-
-
-<section
-id="records"
-class="tab-panel">
-
-<div class="empty-panel">
-
-<h2>
-훈련 기록
-</h2>
-
-<p>
-세션별 거리, 평균 속도, 케이던스, 심박수, 사격 결과를 저장합니다.
-</p>
-
-</div>
-
-</section>
-
-
-<section
-id="athlete"
-class="tab-panel">
-
-<div class="empty-panel">
-
-<h2>
-선수 관리
-</h2>
-
-<p>
-선수 프로필과 장비, 분석 설정을 관리합니다.
-</p>
-
-</div>
-
-</section>
-
-</main>
-
-</div>
 
 <script
-type="module"
-src="script.js">
-</script>
+    type="module"
+    src="script.js"
+></script>
 
 </body>
 </html>
